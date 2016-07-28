@@ -38,6 +38,7 @@ public:
 	void displayHospitals();
 	void addAreaCode(int code);
 	void deleteHospital(int ,int );
+	void releasePatient(int ,int ,int ,int );
 	friend ostream & operator <<(ostream &,city &);
 };
 

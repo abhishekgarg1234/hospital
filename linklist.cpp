@@ -40,9 +40,18 @@ void llperson::dispList()
 	node *tmp = hd;
 	while(tmp!=NULL)
 	{
-	cout<<tmp->per->getName()<<endl;
-	tmp=tmp->nxt;
+		cout<<tmp->per->getName()<<endl;
+		tmp=tmp->nxt;
 	}
+}
+
+void llperson::deletePatient(int pid)
+{
+	//while (th)
+//		node *tmp = this->hd;
+		cout << "ggggggggggg" << endl;
+		
+
 }
 
 llperson &  operator +(llperson & first,llperson & sec){

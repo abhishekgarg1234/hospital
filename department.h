@@ -30,6 +30,7 @@ public:
 	void transferSupportStaff(department &);
 	void transferStaff(department &);
 	void addPatient(int,int,string,string,int);
+	void releasePatient(int );
 };
 
 

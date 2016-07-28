@@ -24,6 +24,7 @@ public:
 	bool compareHospital(hospital &);
 	void tranferDep(int,hospital &,int );
 	void addNewPatient(int,int,string,string,int);
+	void releasePatient(int ,int );
 	int getId();
 
 	//void addDepartment(hospital &,string &);

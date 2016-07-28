@@ -40,11 +40,12 @@ void main(){
 
 	//delhi.displayHospital(100,123);
 
-	delhi.transferSupportStaff(100,123,12,100,123, 14,"NewDep");
-	delhi.transferSupportStaff(100,123,12,100,124,13);
-	delhi.deleteDepartment(100,123,12);
-	delhi.deleteHospital(100,123);
-	//delhi.addPatient(100,123,12,500,"ankush","fever",1000);
+	//delhi.transferSupportStaff(100,123,12,100,123, 14,"NewDep");
+	//delhi.transferSupportStaff(100,123,12,100,124,13);
+	//delhi.deleteDepartment(100,123,12);
+	//delhi.deleteHospital(100,123);
+	delhi.addPatient(100,123,12,500,"ankush","fever",1000);
+	delhi.releasePatient(100,123,12,500);
 	cout<<delhi;
 	int ii;
 	cin >> ii;

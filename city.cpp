@@ -41,7 +41,7 @@ void city::deleteHospital(int ac, int hid)
 			for (int j = 0; j<areaCode[i].nOh; j++) {
 				if (areaCode[i].hos[j]->getId() == hid) {
 					hospital *h = areaCode[i].hos[j];
-					//delete h;
+					delete h;
 					for (; j < areaCode[i].nOh-1; j++) {
 						areaCode[i].hos[j] = areaCode[i].hos[j+1];
 					}
@@ -56,6 +56,19 @@ void city::deleteHospital(int ac, int hid)
 	}
 }
 
+void city::releasePatient(int ac, int hid, int did, int pid)
+{
+	for (int i = 0; i<numOfAreaCodes; i++) {
+		if (areaCode[i].code == ac) {
+			for (int j = 0; j<areaCode[i].nOh; j++) {
+				if (areaCode[i].hos[j]->getId() == hid) {
+					areaCode[i].hos[j]->releasePatient(did,pid);
+				}
+			}
+		}
+	}
+}
+
 void city::displayHospital(int ac, int hid)
 {
 	for (int i = 0; i<numOfAreaCodes; i++) {
@@ -67,7 +80,6 @@ void city::displayHospital(int ac, int hid)
 			}
 		}
 	}
-
 }
 
 void city::createHospital(hospital &h){

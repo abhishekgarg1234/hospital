@@ -14,6 +14,5 @@ class patient:public person{
 public:
 	patient(int,string,string,int,int);
 	int getBedNo();
-
 };
 #endif

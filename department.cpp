@@ -115,3 +115,10 @@ void department::addPatient(int did,int pid,string pname,string illness,int bedn
 	patientCount++;
 
 }
+
+void department::releasePatient(int pid)
+{
+	cout << "gogogogo " <<patientCount<< endl;
+	patients.deletePatient(pid);
+
+}

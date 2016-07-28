@@ -6,3 +6,8 @@ patient::patient(int pid,string pname,string illness,int bedno,int did):person(p
 	bedNo=bedno;
 	depId=did;
 }
+
+int patient::getBedNo()
+{
+	return bedNo;
+}

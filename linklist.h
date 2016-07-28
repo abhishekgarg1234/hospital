@@ -22,6 +22,8 @@ public:
 	llperson();
 	void addNode(person *);
 	void dispList();
+	
+	void deletePatient(int );
 	friend llperson & operator +(llperson &,llperson &);
 	//person *getPersonByName(string);
 };

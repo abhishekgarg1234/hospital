@@ -164,7 +164,16 @@ void hospital::addNewPatient(int did,int pid,string pname,string illness,int bed
 
 }
 
+void hospital::releasePatient(int did, int pid)
+{
+	for (int i = 0; i<nOfDep; i++) {
+		if (this->dep[i]->getId() == did) {
+			dep[i]->releasePatient(pid);
+		}
+	}
+}
+
 hospital::~hospital()
 {
-
+	cout << "destructor called"<<endl;
 }
