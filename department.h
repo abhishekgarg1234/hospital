@@ -28,8 +28,7 @@ public:
 	void addSupportStaff(string , string ,int,int);
 	void addDoctor(string , string ,int,int);
 	void addPatient(int,int,string,string,int,int);
-	
-	//void transferSupportStaff(department &);
+
 	void transferStaff(department &);
 	void transferDoc(department &, int, int);
 	

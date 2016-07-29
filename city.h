@@ -20,6 +20,7 @@ class city{
 
 public:
 	city(string cityName ,int population);
+	hospital * findHospital(int , int , int );
 	friend ostream & operator <<(ostream &,city &);
 
 	void addAreaCode(int code);

@@ -6,6 +6,7 @@
 using namespace std;
 
 hospital::hospital(){}
+
 hospital::hospital(int aC,string name,int id)
 {
 	aCode=aC;
@@ -14,43 +15,50 @@ hospital::hospital(int aC,string name,int id)
 	hId=id;
 }
 
+ostream & operator <<(ostream &o, hospital &s) {
+	o << endl << "HOSPITAL :: " << s.hName << endl;
+	o << "Number of departments : " << s.nOfDep << endl;
+	s.displayDepartments();
+	return o;
+}
 
 department * hospital::getDepartment(int nOfDep,int did){
+	cout << "hospital::getDepartment";
 	for(int i=0;i<nOfDep;i++){
 		if(did==dep[i]->getId()){
-			//dep[i]->addDoctor(stafftype,name,ssid,ag);
+			cout << "found department";
 			return dep[i];
 		}
 	}
+	cout << "Department not found ";
+}
+
+int hospital::getId() {
+	return hId;
+}
+
+int hospital::getNoDep() {
+	return nOfDep;
+}
+
+int hospital::getAcode() {
+	return aCode;
 }
 
 void hospital::addNewSupportStaff(int did,string stafftype,string name,int ssid,int ag){
-
-//for(int i=0;i<nOfDep;i++){
-//		if(did==dep[i]->getId()){
-//			dep[i]->addSupportStaff(stafftype,name,ssid,ag);
-//		}
-//	}
-	
+	cout << "hospital::addNewSupportStaff" << endl;
 	department *d;
 	d=getDepartment(nOfDep,did);
 	d->addSupportStaff(stafftype,name,ssid,ag);
-
-
-
-return;
+	return;
 }
 
 void hospital::addNewDoctor(int did,string stafftype,string name,int ssid,int ag){
-
-for(int i=0;i<nOfDep;i++){
-		if(did==dep[i]->getId()){
-			dep[i]->addDoctor(stafftype,name,ssid,ag);
-		}
-	}
-return;
+	department *d;
+	d = getDepartment(nOfDep, did);
+	d->addDoctor(stafftype, name, ssid, ag);
+	return;
 }
-
 
 void hospital::addNewDepartment(string depname,int did){
 
@@ -65,26 +73,10 @@ void hospital::addNewDepartment(string depname,int did){
 	nOfDep++;
 }
 
-int hospital::getId(){
-	return hId;
-}
-
-void hospital::displayDepartments(){
-	for(int i=0;i<nOfDep;i++){
-		cout<<"\nDepartment "<<i<<" : "<< dep[i]->getName()<<endl;
-		cout<<"staff count : "<<dep[i]->getStaffCount()<<endl;
-		cout<<"number of doctors: "<<dep[i]->getDocCount()<<endl;
-		cout<<"number of support staff: "<<dep[i]->getSstaffCount()<<endl;
-		dep[i]->displayStaff();
-		dep[i]->displayPatient();
-	}
-}
-
-ostream & operator <<(ostream &o,hospital &s){
-	o<<endl<<"HOSPITAL :: "<<s.hName<<endl;
-	o<<"Number of departments : "<<s.nOfDep<<endl;
-	s.displayDepartments();
-	return o;
+void hospital::addNewPatient(int did, int pid, string pname, string illness, int bedno, int ag) {
+	department *d;
+	d = getDepartment(nOfDep, did);
+	d->addPatient(did, pid, pname, illness, bedno, ag);
 }
 
 bool hospital::compareHospital(hospital &h)
@@ -105,14 +97,25 @@ bool hospital::compareHospital(hospital &h)
 	}
 	return false;
 }
+
+void hospital::tranferDoc(int did1, hospital & h, int did2, int docId1, int docId2) {
+	department *d1 = NULL;
+	department *d2 = NULL;
+	d1 = getDepartment(nOfDep, did1);
+	for (int i = 0; i<h.nOfDep; i++) {
+		if (did2 == h.dep[i]->getId()) {
+			d2 = dep[i];
+		}
+	}
+	d2->transferDoc(*d1, docId1, docId2);
+}
+
 void hospital::tranferDep(int did1,hospital &h2,int did2){
 	department *d1=NULL;
 	department *d2=NULL;
-	for(int i=0;i<nOfDep;i++){
-		if(did1==dep[i]->getId()){
-			d1=dep[i];
-		}
-	}
+
+	d1 = getDepartment(nOfDep, did1);
+	
 	for(int i=0;i<h2.nOfDep;i++){
 		if(did2==h2.dep[i]->getId()){
 			d2=dep[i];
@@ -120,8 +123,8 @@ void hospital::tranferDep(int did1,hospital &h2,int did2){
 	}
 
 	d2->transferStaff(*d1);
-
 }
+
 void hospital::deleteDepartment(int did){
 	
 	for(int i=0;i<nOfDep;i++){
@@ -135,72 +138,33 @@ void hospital::deleteDepartment(int did){
 	this->nOfDep--;
 }
 
-int hospital::getAcode(){
-		return aCode;
-	}
-
-
-int hospital::getNoDep(){
-	return nOfDep;
+void hospital::releasePatient(int did, int pid){
+	department *d;
+	d = getDepartment(nOfDep, did);
+	d->releasePatient(pid);
 }
-
-void hospital::addNewPatient(int did,int pid,string pname,string illness,int bedno,int ag){
-	for(int i=0;i<nOfDep;i++){
-		if(did==dep[i]->getId()){
-			dep[i]->addPatient(did,pid,pname,illness,bedno,ag);
-		}
-	}
-
-}
-
-void hospital::releasePatient(int did, int pid)
-{
-	for (int i = 0; i<nOfDep; i++) {
-		if (this->dep[i]->getId() == did) {
-			dep[i]->releasePatient(pid);
-		}
-	}
-}
-
 
 void hospital::supportStaffResigns(int did,int sid){
-	for (int i = 0; i<nOfDep; i++) {
-		if (this->dep[i]->getId() == did) {
-			dep[i]->supportStaffResigns(sid);
-		}
-	}
-}
-
-void hospital::tranferDoc(int did1, hospital & h, int did2, int docId1, int docId2)
-{
-
-	department *d1=NULL;
-	department *d2=NULL;
-	for(int i=0;i<nOfDep;i++){
-		if(did1==dep[i]->getId()){
-			d1=dep[i];
-		}
-	}
-	for(int i=0;i<h.nOfDep;i++){
-		if(did2==h.dep[i]->getId()){
-			d2=dep[i];
-		}
-	}
-
-	d2->transferDoc(*d1, docId1, docId2);
-
-
-
+	department *d;
+	d = getDepartment(nOfDep, did);
+	d->supportStaffResigns(sid);
 }
 
 void hospital::releaseDoctor(int did ,int docId){
+	department *d;
+	d = getDepartment(nOfDep, did);
+	d->releaseDoctor(docId);
+}
 
+void hospital::displayDepartments() {
 	for (int i = 0; i<nOfDep; i++) {
-		if (this->dep[i]->getId() == did) {
-			dep[i]->releaseDoctor(docId);
-		}
+		cout << "\nDepartment " << i << " : " << dep[i]->getName() << endl;
+		cout << "staff count : " << dep[i]->getStaffCount() << endl;
+		cout << "number of doctors: " << dep[i]->getDocCount() << endl;
+		cout << "number of support staff: " << dep[i]->getSstaffCount() << endl;
+		dep[i]->displayStaff();
+		dep[i]->displayPatient();
 	}
-
 }
 
 hospital::~hospital(){
