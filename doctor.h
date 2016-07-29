@@ -6,29 +6,31 @@
 using namespace std;
 
 class doctor:public staff{
+	int age;
+	int mobileNo;
 public:
-	doctor(string ,int );
+	doctor(string ,int ,int);
 	virtual ~doctor()=0;
 };
 
 class surgeon : public doctor{
 public:
-	surgeon(string ,int );
+	surgeon(string ,int ,int);
 };
 
 class radiologist : public doctor{
 public:
-	radiologist(string ,int );
+	radiologist(string ,int ,int);
 };
 
 class oncologist : public doctor{
 public:
-	oncologist(string ,int );
+	oncologist(string ,int ,int);
 };
 
 class paediatrician : public doctor{
 public:
-	paediatrician(string ,int );
+	paediatrician(string ,int ,int);
 };
 
 #endif

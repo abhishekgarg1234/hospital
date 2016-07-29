@@ -12,7 +12,7 @@ class patient:public person{
 	int depId;
 
 public:
-	patient(int,string,string,int,int);
+	patient(int,string,string,int,int,int);
 	int getBedNo();
 };
 #endif

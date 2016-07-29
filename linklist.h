@@ -6,9 +6,13 @@ using namespace std;
 
 class person{
 	string name;
+	int id;
+	int age;
 public:
-	person(string );
+	person(string ,int ,int );
 	string getName();
+	int getId();
+	int getAge();
 	friend ostream& operator <<(ostream &, person const &);
 };
 struct node{
@@ -22,8 +26,8 @@ public:
 	llperson();
 	void addNode(person *);
 	void dispList();
-	
-	void deletePatient(int );
+	person * getPerson(int);
+	void deletePerson(int );
 	friend llperson & operator +(llperson &,llperson &);
 	//person *getPersonByName(string);
 };

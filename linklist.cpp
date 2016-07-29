@@ -17,9 +17,11 @@ void llperson::addNode(person *p){
 	
 }
 
-person::person(string s){
+person::person(string s,int iD,int ag){
 	//cout<<"person"<<endl;
 	name=s;
+	id=iD;
+	age=ag;
 }
 
 
@@ -34,6 +36,9 @@ string person::getName()
 	return name;
 }
 
+int person::getAge(){
+	return age;
+}
 
 void llperson::dispList()
 {
@@ -45,13 +50,31 @@ void llperson::dispList()
 	}
 }
 
-void llperson::deletePatient(int pid)
+void llperson::deletePerson(int pid)
 {
-	//while (th)
-//		node *tmp = this->hd;
-		cout << "ggggggggggg" << endl;
-		
+	node * tmp;
+	tmp=hd;
+	node *prev;
+	prev=tmp;
+	node *next;
+	next = tmp;
 
+	if(tmp->per->getId() == pid){
+		hd=hd->nxt;
+		delete tmp;
+		return;
+	}
+	prev=tmp;
+	tmp=tmp->nxt;
+	while(tmp!=NULL)
+	{
+		if(tmp->per->getId()== pid){
+			prev->nxt=tmp->nxt;
+			delete tmp;
+			return;
+		}
+		tmp=tmp->nxt;
+	}	
 }
 
 llperson &  operator +(llperson & first,llperson & sec){
@@ -64,7 +87,26 @@ llperson &  operator +(llperson & first,llperson & sec){
 }
 
 
+person * llperson::getPerson(int id)
+{
+	node * tmp;
+	tmp=hd;
 
+	while(tmp!=NULL)
+	{
+		if(tmp->per->getId()== id)
+			return tmp->per;
+
+		tmp=tmp->nxt;
+	}
+
+	return tmp->per;
+}
+
+
+int person::getId(){
+	return id;
+}
 
 
 

@@ -17,20 +17,28 @@ class department{
 	int sStaffCount;
 	int patientCount;
 public:
+
 	department(string ,int );
-	void addSupportStaff(string , string ,int);
-	void addDoctor(string , string ,int);
 	int getId();
-	void displayStaff();
-	void displayPatient();
-	string getName();
 	int getStaffCount();
 	int getDocCount();
 	int getSstaffCount();
-	void transferSupportStaff(department &);
+	string getName();
+	
+	void addSupportStaff(string , string ,int,int);
+	void addDoctor(string , string ,int,int);
+	void addPatient(int,int,string,string,int,int);
+	
+	//void transferSupportStaff(department &);
 	void transferStaff(department &);
-	void addPatient(int,int,string,string,int);
+	void transferDoc(department &, int, int);
+	
 	void releasePatient(int );
+	void releaseDoctor(int);
+	void supportStaffResigns(int );
+
+	void displayStaff();
+	void displayPatient();
 };
 
 

@@ -16,19 +16,19 @@ department::department(string s,int id){
 	depId=id;
 }
 
-void department::addSupportStaff(string stafftype, string name,int sid){
+void department::addSupportStaff(string stafftype, string name,int sid,int ag){
 	if(stafftype=="nurse"){
-		staff *s= new nurse(name,sid);
+		staff *s= new nurse(name,sid,ag);
 		supportStaffs.addNode(s);
 		sStaffCount++;
 	}
 	else if(stafftype=="cleaner"){
-		staff *s= new cleaner(name,sid);
+		staff *s= new cleaner(name,sid,ag);
 		supportStaffs.addNode(s);
 		sStaffCount++;
 	}
 	else if(stafftype=="frontOffice"){
-		staff *s= new frontOffice(name,sid);
+		staff *s= new frontOffice(name,sid,ag);
 		supportStaffs.addNode(s);
 		sStaffCount++;
 	}
@@ -38,25 +38,25 @@ void department::addSupportStaff(string stafftype, string name,int sid){
 	staffCount++;
 }
 
-void department::addDoctor(string stafftype, string name,int sid){
+void department::addDoctor(string stafftype, string name,int sid,int ag){
 	
 	if(stafftype=="surgeon"){
-		staff *s= new surgeon(name,sid);
+		staff *s= new surgeon(name,sid,ag);
 		doctors.addNode(s);
 		dCount++;
 	}
 	else if(stafftype=="radiologist"){
-		staff *s= new radiologist(name,sid);
+		staff *s= new radiologist(name,sid,ag);
 		doctors.addNode(s);
 		dCount++;
 	}
 	else if(stafftype=="oncologist"){
-		staff *s= new oncologist(name,sid);
+		staff *s= new oncologist(name,sid,ag);
 		doctors.addNode(s);
 		dCount++;
 	}
 	else if(stafftype=="paediatrician"){
-		staff *s= new paediatrician(name,sid);
+		staff *s= new paediatrician(name,sid,ag);
 		doctors.addNode(s);
 		dCount++;
 	}
@@ -98,10 +98,10 @@ int department::getSstaffCount(){
 int department::getId(){
 	return depId;
 }
-void department::transferSupportStaff(department &d)
-{
-	supportStaffs= supportStaffs + d.supportStaffs;
-}
+//void department::transferSupportStaff(department &d)
+//{
+//	supportStaffs= supportStaffs + d.supportStaffs;
+//}
 
 void department::transferStaff(department &d){
 	supportStaffs= supportStaffs + d.supportStaffs;
@@ -109,16 +109,60 @@ void department::transferStaff(department &d){
 	staffCount += d.sStaffCount;
 }
 
-void department::addPatient(int did,int pid,string pname,string illness,int bedno){
-	patient *s= new patient(pid,pname,illness,bedno,did);
+void department::transferDoc(department &d, int docId1, int docId2){
+
+	person *p1=doctors.getPerson(docId1);
+	doctor *p=((doctor *)p1);
+	if(surgeon * ptr = dynamic_cast<surgeon *>(p))
+	{
+		cout<<"surgeon ss"<<endl;
+		d.addDoctor("surgeon", p->getName(),docId2,p->getAge());
+   
+	}
+	else if(radiologist * ptr = dynamic_cast<radiologist *>(p))
+	{
+		d.addDoctor("radiologist", p->getName(),docId2,p->getAge());
+   
+	}
+	else if(oncologist * ptr = dynamic_cast<oncologist *>(p))
+	{
+		d.addDoctor("oncologist", p->getName(),docId2,p->getAge());
+   
+	}
+	else if(paediatrician * ptr = dynamic_cast<paediatrician *>(p))
+	{
+		d.addDoctor("paediatrician", p->getName(),docId2,p->getAge());
+   
+	}
+	else
+	{
+		cout<<"Not exist";
+	}
+
+}
+
+
+void department::addPatient(int did,int pid,string pname,string illness,int bedno,int ag){
+	patient *s= new patient(pid,pname,illness,bedno,did,ag);
 	patients.addNode(s);
 	patientCount++;
 
 }
 
-void department::releasePatient(int pid)
-{
-	cout << "gogogogo " <<patientCount<< endl;
-	patients.deletePatient(pid);
+void department::releasePatient(int pid){
+	patients.deletePerson(pid);
+	patientCount--;
+	//person * p = patients.getPerson(pid);
+	//cout<<"\n"<<((patient *)p)->getBedNo();
+}
 
+void department::supportStaffResigns(int sid){
+	supportStaffs.deletePerson(sid);
+	sStaffCount--;
+	staffCount--;
+}
+
+void department::releaseDoctor(int docId){
+		doctors.deletePerson(docId);
+		dCount--;
 }

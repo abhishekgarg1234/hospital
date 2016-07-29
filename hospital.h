@@ -15,25 +15,28 @@ class hospital{
 public:
 	hospital();
 	hospital(int a,string s,int);
-	
-	void addDepartment(department &);
-
-	void addNewDepartment(string ,int);
-	void addNewSupportStaff(int,string,string,int);
-	void addNewDoctor(int,string,string,int);
-	bool compareHospital(hospital &);
-	void tranferDep(int,hospital &,int );
-	void addNewPatient(int,int,string,string,int);
-	void releasePatient(int ,int );
-	int getId();
-
-	//void addDepartment(hospital &,string &);
-
-	void displayDepartments();
 	friend ostream & operator <<(ostream &,hospital &);
-	void deleteDepartment(int);
+	department * getDepartment(int ,int );
+	int getId();
 	int getNoDep();
 	int getAcode();
+	
+	void addNewDepartment(string ,int);
+	void addNewSupportStaff(int,string,string,int,int);
+	void addNewDoctor(int,string,string,int,int);
+	void addNewPatient(int,int,string,string,int,int);
+
+	bool compareHospital(hospital &);
+	void tranferDep(int,hospital &,int );
+	void tranferDoc(int, hospital &, int, int,int);
+	
+	void releasePatient(int ,int );
+	void releaseDoctor(int ,int );
+	void supportStaffResigns(int ,int );
+	void deleteDepartment(int);
+
+	void displayDepartments();
+
 	 ~hospital();
 };
 

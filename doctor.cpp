@@ -5,22 +5,23 @@
 #include"linklist.h"
 using namespace std;
 
-doctor::doctor(string s,int id):staff(s,id){
+doctor::doctor(string s,int id,int ag):staff(s,id,ag){
+	age=ag;
 }
 
-surgeon::surgeon(string s,int id):doctor(s,id){
-
-}
-
-radiologist::radiologist(string s,int id):doctor(s,id){
+surgeon::surgeon(string s,int id,int ag):doctor(s,id,ag){
 
 }
 
-oncologist::oncologist(string s,int id):doctor(s,id){
+radiologist::radiologist(string s,int id,int ag):doctor(s,id,ag){
 
 }
 
-paediatrician::paediatrician(string s,int id):doctor(s,id){
+oncologist::oncologist(string s,int id,int ag):doctor(s,id,ag){
+
+}
+
+paediatrician::paediatrician(string s,int id,int ag):doctor(s,id,ag){
 
 }
 doctor::~doctor(){

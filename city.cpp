@@ -161,25 +161,25 @@ void city::addDepartment(int ac,int hid,string depname,int did){
 }
 
 
-void city::addSupportStaff(int ac,int hid,int did,string stafftype, string name,int id){
+void city::addSupportStaff(int ac,int hid,int did,string stafftype, string name,int id,int ag){
 
 	for(int i=0;i<numOfAreaCodes;i++){
 		if(areaCode[i].code==ac){
 			for(int j=0;j<areaCode[i].nOh;j++){
 				if(areaCode[i].hos[j]->getId()==hid){
-					areaCode[i].hos[j]->addNewSupportStaff(did,stafftype,name,id);
+					areaCode[i].hos[j]->addNewSupportStaff(did,stafftype,name,id,ag);
 				}
 			}
 		}
 	}
 }
 
-void city::addDoctor(int ac,int hid,int did,string stafftype, string name,int id){
+void city::addDoctor(int ac,int hid,int did,string stafftype, string name,int id,int ag){
 	for(int i=0;i<numOfAreaCodes;i++){
 		if(areaCode[i].code==ac){
 			for(int j=0;j<areaCode[i].nOh;j++){
 				if(areaCode[i].hos[j]->getId()==hid){
-					areaCode[i].hos[j]->addNewDoctor(did,stafftype,name,id);
+					areaCode[i].hos[j]->addNewDoctor(did,stafftype,name,id,ag);
 				}
 			}
 		}
@@ -274,24 +274,85 @@ void city::deleteDepartment(int ac,int hid,int did){
 			}
 		}
 	}
-
-
-
 }
 
-void city::addPatient(int ac,int hid,int did,int pid,string pname,string illness,int bedno){
+void city::addPatient(int ac,int hid,int did,int pid,string pname,string illness,int bedno,int ag){
 
 	for(int i=0;i<numOfAreaCodes;i++){
 		if(areaCode[i].code==ac){
 			for(int j=0;j<areaCode[i].nOh;j++){
 				if(areaCode[i].hos[j]->getId()==hid){
-					areaCode[i].hos[j]->addNewPatient(did,pid,pname,illness,bedno);
+					areaCode[i].hos[j]->addNewPatient(did,pid,pname,illness,bedno,ag);
 					break;
 				}
 			}
 			break;
 		}
 	}
+}
+
+void city::supportStaffResigns(int ac,int hid,int did,int sid){
+	for (int i = 0; i<numOfAreaCodes; i++) {
+		if (areaCode[i].code == ac) {
+			for (int j = 0; j<areaCode[i].nOh; j++) {
+				if (areaCode[i].hos[j]->getId() == hid) {
+					areaCode[i].hos[j]->supportStaffResigns(did,sid);
+					break;
+				}
+			}
+			break;
+		}
+	}
+
+}
+
+void city::transferDoctors(int ac1,int hid1 ,int did1,int doc1id ,int ac2, int hid2 ,int did2, int doc2id ){
+
+	hospital *a=NULL;
+	hospital *b=NULL;
+	for(int i=0;i<numOfAreaCodes;i++){
+			if(areaCode[i].code==ac1){
+				for(int j=0;j<areaCode[i].nOh;j++){
+					if(areaCode[i].hos[j]->getId()==hid1){
+						a=areaCode[i].hos[j];
+						break;
+					}
+				}
+				break;
+			}
+		}
+
+		for(int i=0;i<numOfAreaCodes;i++){
+			if(areaCode[i].code==ac2){
+				for(int j=0;j<areaCode[i].nOh;j++){
+					if(areaCode[i].hos[j]->getId()==hid2){
+						b=areaCode[i].hos[j];
+						break;
+					}
+				}
+				break;
+			}
+		}
+	
+	a->tranferDoc(did1,*b,did2,doc1id, doc2id);
+
+}
+void city::deleteDoctor(int ac ,int hid,int did,int docId ){
+
+	hospital *a=NULL;
+	hospital *b=NULL;
+	for(int i=0;i<numOfAreaCodes;i++){
+			if(areaCode[i].code==ac){
+				for(int j=0;j<areaCode[i].nOh;j++){
+					if(areaCode[i].hos[j]->getId()==hid){
+					 areaCode[i].hos[j]->releaseDoctor(did,docId);
+						break;
+					}
+				}
+				break;
+			}
+		}
+
 
 
 }

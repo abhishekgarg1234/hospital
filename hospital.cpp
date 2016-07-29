@@ -14,35 +14,38 @@ hospital::hospital(int aC,string name,int id)
 	hId=id;
 }
 
-void hospital::addDepartment(department &d){
 
+department * hospital::getDepartment(int nOfDep,int did){
 	for(int i=0;i<nOfDep;i++){
-		if(d.getName()==dep[i]->getName()){
-			cout<<"Department already present";
-			return;
+		if(did==dep[i]->getId()){
+			//dep[i]->addDoctor(stafftype,name,ssid,ag);
+			return dep[i];
 		}
 	}
-	
-	dep[nOfDep]=&d;
-	nOfDep++;
 }
 
+void hospital::addNewSupportStaff(int did,string stafftype,string name,int ssid,int ag){
 
-void hospital::addNewSupportStaff(int did,string stafftype,string name,int ssid){
+//for(int i=0;i<nOfDep;i++){
+//		if(did==dep[i]->getId()){
+//			dep[i]->addSupportStaff(stafftype,name,ssid,ag);
+//		}
+//	}
+	
+	department *d;
+	d=getDepartment(nOfDep,did);
+	d->addSupportStaff(stafftype,name,ssid,ag);
 
-for(int i=0;i<nOfDep;i++){
-		if(did==dep[i]->getId()){
-			dep[i]->addSupportStaff(stafftype,name,ssid);
-		}
-	}
+
+
 return;
 }
 
-void hospital::addNewDoctor(int did,string stafftype,string name,int ssid){
+void hospital::addNewDoctor(int did,string stafftype,string name,int ssid,int ag){
 
 for(int i=0;i<nOfDep;i++){
 		if(did==dep[i]->getId()){
-			dep[i]->addDoctor(stafftype,name,ssid);
+			dep[i]->addDoctor(stafftype,name,ssid,ag);
 		}
 	}
 return;
@@ -62,23 +65,9 @@ void hospital::addNewDepartment(string depname,int did){
 	nOfDep++;
 }
 
-
-
 int hospital::getId(){
 	return hId;
 }
-//
-//void hospital::addDepartment(string hosp,string depart){
-//	for(int i=0;i<nOfDep;i++){
-//		if(d.getName()==dep[i]->getName()){
-//			cout<<"Department already present";
-//			return;
-//		}
-//	}
-//		
-//	dep[nOfDep]=&d;
-//	nOfDep++;
-//}
 
 void hospital::displayDepartments(){
 	for(int i=0;i<nOfDep;i++){
@@ -155,10 +144,10 @@ int hospital::getNoDep(){
 	return nOfDep;
 }
 
-void hospital::addNewPatient(int did,int pid,string pname,string illness,int bedno){
+void hospital::addNewPatient(int did,int pid,string pname,string illness,int bedno,int ag){
 	for(int i=0;i<nOfDep;i++){
 		if(did==dep[i]->getId()){
-			dep[i]->addPatient(did,pid,pname,illness,bedno);
+			dep[i]->addPatient(did,pid,pname,illness,bedno,ag);
 		}
 	}
 
@@ -173,7 +162,47 @@ void hospital::releasePatient(int did, int pid)
 	}
 }
 
-hospital::~hospital()
+
+void hospital::supportStaffResigns(int did,int sid){
+	for (int i = 0; i<nOfDep; i++) {
+		if (this->dep[i]->getId() == did) {
+			dep[i]->supportStaffResigns(sid);
+		}
+	}
+}
+
+void hospital::tranferDoc(int did1, hospital & h, int did2, int docId1, int docId2)
 {
+
+	department *d1=NULL;
+	department *d2=NULL;
+	for(int i=0;i<nOfDep;i++){
+		if(did1==dep[i]->getId()){
+			d1=dep[i];
+		}
+	}
+	for(int i=0;i<h.nOfDep;i++){
+		if(did2==h.dep[i]->getId()){
+			d2=dep[i];
+		}
+	}
+
+	d2->transferDoc(*d1, docId1, docId2);
+
+
+
+}
+
+void hospital::releaseDoctor(int did ,int docId){
+
+	for (int i = 0; i<nOfDep; i++) {
+		if (this->dep[i]->getId() == did) {
+			dep[i]->releaseDoctor(docId);
+		}
+	}
+
+}
+
+hospital::~hospital(){
 	cout << "destructor called"<<endl;
 }
